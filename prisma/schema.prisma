@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        String   @default("user")
+  bookings    Booking[]
+  createdAt   DateTime @default(now())
+}
+
+model Destination {
+  id          String    @id @default(cuid())
+  name        String
+  country     String
+  description String?
+  image       String?
+  packages    Package[]
+}
+
+model Package {
+  id          String      @id @default(cuid())
+  title       String
+  slug        String      @unique
+  description String?
+  price       Float
+  duration    Int
+  destination Destination @relation(fields: [destinationId], references: [id])
+  destinationId String
+  bookings    Booking[]
+  createdAt   DateTime @default(now())
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  package     Package  @relation(fields: [packageId], references: [id])
+  packageId   String
+  status      String   @default("pending")
+  totalAmount Float
+  createdAt   DateTime @default(now())
+}
+
+model Blog {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String
+  image       String?
+  category    BlogCategory @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  createdAt   DateTime @default(now())
+}
+
+model BlogCategory {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  blogs       Blog[]
+}
+
+model Page {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  layoutData  Json     // <- For builder/drag-drop JSON structure
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
