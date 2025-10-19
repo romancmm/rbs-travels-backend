@@ -1,33 +1,35 @@
 {
-  "name": "travel-agency-backend",
-  "version": "1.0.0",
-  "description": "Full-stack travel agency backend using Hono, MVC pattern, Swagger UI for API docs.",
-  "main": "src/index.ts",
-  "scripts": {
-    "dev": "bun run src/index.ts",
-    "build": "bun build",
-    "start": "bun run dist/index.js"
-  },
-  "dependencies": {
-    "@hono/node-server": "^1.19.5",
-    "@hono/swagger-ui": "^0.5.2",
-    "@prisma/client": "^6.17.0",
-    "bcryptjs": "^3.0.2",
-    "dotenv": "^17.2.3",
-    "hono": "^4.9.10",
-    "jsonwebtoken": "^9.0.2",
-    "prisma": "^6.17.0",
-    "swagger-ui-express": "^4.6.3",
-    "zod": "^3.22.2"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
-    "@types/bun": "latest",
-    "@types/jsonwebtoken": "^9.0.10",
-    "bun-types": "^1.2.23",
-    "ts-node-dev": "^2.0.0",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
-  },
-  "private": true
+ "name": "travel-agency-backend",
+ "version": "1.0.0",
+ "description": "Full-stack travel agency backend using Hono, MVC pattern, Swagger UI for API docs.",
+ "main": "src/index.ts",
+ "scripts": {
+  "dev": "ts-node-dev --respawn --transpile-only src/core/server.ts",
+  "build": "bun build",
+  "start": "bun run dist/index.js",
+  "migrate": "npx prisma migrate dev",
+  "prisma:generate": "npx prisma generate"
+ },
+ "dependencies": {
+  "@hono/node-server": "^1.19.5",
+  "@hono/swagger-ui": "^0.5.2",
+  "@prisma/client": "^6.17.1",
+  "bcryptjs": "^3.0.2",
+  "dotenv": "^17.2.3",
+  "hono": "^4.9.10",
+  "jsonwebtoken": "^9.0.2",
+  "prisma": "^6.17.1",
+  "swagger-ui-express": "^4.6.3",
+  "zod": "^3.22.2"
+ },
+ "devDependencies": {
+  "@types/bcryptjs": "^3.0.0",
+  "@types/bun": "latest",
+  "@types/jsonwebtoken": "^9.0.10",
+  "bun-types": "^1.2.23",
+  "ts-node-dev": "^2.0.0",
+  "tsx": "^4.20.6",
+  "typescript": "^5.9.3"
+ },
+ "private": true
 }
